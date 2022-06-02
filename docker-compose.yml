@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  apps:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: >
+      sh -c "yarn start:dev api-gateway --debug 0.0.0.0:${APP_DEBUG_PORT} &
+             yarn start:dev users"
+    ports:
+      - '${APP_OUT_PORT}:${APP_PORT}'
+      - '${APP_DEBUG_OUT_PORT}:${APP_DEBUG_PORT}'
+    volumes:
+      - ./apps:/app/apps
+      - ./libs:/app/libs
+  nats:
+    image: 'nats:0.8.0'
+    expose:
+      - "4222"
+    ports:
+      - "8222:8222"
+    hostname: nats-server
