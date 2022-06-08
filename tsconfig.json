@@ -17,6 +17,25 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@app/nats-communicator": [
+        "libs/nats-communicator/src"
+      ],
+      "@app/nats-communicator/*": [
+        "libs/nats-communicator/src/*"
+      ],
+      "@app/dto": [
+        "libs/dto/src"
+      ],
+      "@app/dto/*": [
+        "libs/dto/src/*"
+      ],
+      "@app/util": [
+        "libs/util/src"
+      ],
+      "@app/util/*": [
+        "libs/util/src/*"
+      ]
+    }
   }
 }

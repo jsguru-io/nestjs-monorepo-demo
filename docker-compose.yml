@@ -1,21 +1,54 @@
 version: '3.7'
 
 services:
-  apps:
+  api-gateway:
     env_file:
       - .env
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: >
-      sh -c "yarn start:dev api-gateway --debug 0.0.0.0:${APP_DEBUG_PORT} &
-             yarn start:dev users"
+      args:
+        BUILD_APP: api-gateway
+    command: 'yarn start:dev api-gateway --debug 0.0.0.0:${APP_DEBUG_PORT}'
     ports:
       - '${APP_OUT_PORT}:${APP_PORT}'
       - '${APP_DEBUG_OUT_PORT}:${APP_DEBUG_PORT}'
     volumes:
       - ./apps:/app/apps
       - ./libs:/app/libs
+    depends_on:
+      - nats
+
+  users:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        BUILD_APP: users
+    command: 'yarn start:dev users'
+    volumes:
+      - ./apps:/app/apps
+      - ./libs:/app/libs
+    depends_on:
+      - nats
+
+  inventories:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        BUILD_APP: inventories
+    command: 'yarn start:dev inventories'
+    volumes:
+      - ./apps:/app/apps
+      - ./libs:/app/libs
+    depends_on:
+      - nats
+
   nats:
     image: 'nats:0.8.0'
     expose:

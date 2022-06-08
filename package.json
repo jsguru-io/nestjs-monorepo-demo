@@ -22,13 +22,18 @@
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^2.1.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/microservices": "^8.4.6",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^5.2.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "nats": "^2.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -70,7 +75,13 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/apps/"
-    ]
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@app/nats-communicator(|/.*)$": "<rootDir>/libs/nats-communicator/src/$1",
+      "^@app/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
+      "^@app/util(|/.*)$": "<rootDir>/libs/util/src/$1"
+    }
   }
 }
