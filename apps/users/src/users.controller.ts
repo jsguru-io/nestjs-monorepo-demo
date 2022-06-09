@@ -19,8 +19,6 @@ export class UsersController {
 
   @EventPattern('userCreated')
   async userCreated(data: Record<string, any>) {
-    console.log('[users]: ', data);
-
     this.communicator.getClient().emit('imageUploaded', {
       url: 'https://www.example.com/?brother=believe&baby=anger',
     });
